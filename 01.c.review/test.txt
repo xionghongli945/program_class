@@ -1,1 +1,1 @@
-LINUX,NB!
+linux,nb!
