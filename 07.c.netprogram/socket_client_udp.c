@@ -13,7 +13,7 @@
 int port = 8888;
 int main()
 {
-    int sock_fd, i=0, z;
+    int sock_fd, z;
     char buf[80], strl[80];
     struct sockaddr_in adr_srvr;
     FILE *fp;
@@ -38,8 +38,28 @@ int main()
         exit(1);
     }
     printf("send message....\n");
-    /* read 3 lines to send */
-    for(i;i<3;i++)
+    /* user input by keyboard */
+    while(1)
+    {
+        printf("input send message:");
+        scanf("%s",strl);
+        printf("%s\n", strl);
+        sprintf(buf, "%s\n", strl);
+        z = sendto(sock_fd, buf, sizeof(buf), 0, (struct sockaddr *)&adr_srvr, sizeof(adr_srvr));
+        if (z < 0)
+        {
+            perror("sendto error");
+            exit(1);
+        }
+        if (strncmp(strl, "stop", 4) == 0)
+        {
+            printf("ending....\n");
+            break;
+        }   
+    }
+    
+    /* read 3 lines to send   
+    for(int i=1;i<3;i++)
     {
         fgets(strl, 80, fp);
         printf("%d:%s", i, strl);
@@ -59,6 +79,7 @@ int main()
         perror("sendto error");
         exit(1);
     }
+    */
     fclose(fp);
     close(sock_fd);
     exit(0);
