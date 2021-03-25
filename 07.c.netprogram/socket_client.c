@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #define SERVPORT 12306 /*服务器监听端口号*/
 #define MAXDATASIZE 100 /*每次最大数据传输量*/
+#define ITSME "It's Xionghongli"
 int main(int argc, char *argv[])
 {
     int sock_fd, recvbytes;
@@ -47,7 +48,7 @@ int main(int argc, char *argv[])
     }
     buf[recvbytes] = '\0';
     printf("收到：%s",buf);
-    if(send(sock_fd, "It's Xionghongli ", 25, 0) == -1)
+    if(send(sock_fd, ITSME, sizeof(ITSME), 0) == -1)
     printf("Send failed!\n");
     close(sock_fd);
 }
