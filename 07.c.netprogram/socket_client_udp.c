@@ -19,7 +19,7 @@ int main()
     FILE *fp;
     printf("open file....\n");
     /* open file (liu) with only read */
-    fp = fopen("liu", "r");
+    fp = fopen("read.txt", "r");
     if(fp == NULL)
     {
         perror("open file error");

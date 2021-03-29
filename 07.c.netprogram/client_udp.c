@@ -17,16 +17,16 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Please enter the server's hostname and port\n");
         exit(1);
     }
-    int sock_fd, z, port;
+    int sock_fd, z;
     char buf[80], strl[80];
     struct hostent *host;
     struct sockaddr_in adr_srvr;
     printf("connecting server....\n");
     /* create IP address */
     adr_srvr.sin_family = AF_INET;
-    adr_srvr.sin_port = htons((int)argv[2]);
+    adr_srvr.sin_port = htons(atoi(argv[2]));
     //adr_srvr.sin_addr.s_addr = htonl(INADDR_ANY);
-    adr_srvr.sin_addr.s_addr = htonl((int)argv[1]);
+    inet_aton(argv[1], &adr_srvr.sin_addr);
     bzero(&(adr_srvr.sin_zero), 8);
     sock_fd = socket(AF_INET, SOCK_DGRAM, 0);
     if(sock_fd == -1)
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         printf("input send message:");
         scanf("%s",strl);
         printf("%s\n", strl);
-        sprintf(buf, "%s", strl);
+        sprintf(buf, "%s\n", strl);
         z = sendto(sock_fd, buf, sizeof(buf), 0, (struct sockaddr *)&adr_srvr, sizeof(adr_srvr));
         if (z < 0)
         {
